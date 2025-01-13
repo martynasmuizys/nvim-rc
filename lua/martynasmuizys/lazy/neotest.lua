@@ -14,11 +14,7 @@ return {
             neotest.setup({
                 adapters = {
                     require("neotest-vitest"),
-                    require("neotest-plenary").setup({
-                        -- this is my standard location for minimal vim rc
-                        -- in all my projects
-                        min_init = "./scripts/tests/minimal.vim",
-                    }),
+                    require("neotest-plenary"),
                 }
             })
 
