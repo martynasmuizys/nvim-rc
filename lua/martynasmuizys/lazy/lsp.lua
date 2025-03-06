@@ -55,16 +55,30 @@ return {
 
         local cmp_select = { behavior = cmp.SelectBehavior.Select }
 
+        local luasnip = require("luasnip")
         cmp.setup({
             snippet = {
                 expand = function(args)
-                    require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+                    luasnip.lsp_expand(args.body) -- For `luasnip` users.
                 end,
             },
 
             mapping = cmp.mapping.preset.insert({
-                ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
-                ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
+                ["<C-n>"] = cmp.mapping(function()
+                    if cmp.visible() then
+                        cmp.select_next_item()
+                    elseif luasnip.locally_jumpable(1) then
+                        luasnip.jump(1)
+                    end
+                end, { "i", "s" }),
+
+                ["<C-p>"] = cmp.mapping(function()
+                    if cmp.visible() then
+                        cmp.select_prev_item()
+                    elseif luasnip.locally_jumpable(-1) then
+                        luasnip.jump(-1)
+                    end
+                end, { "i", "s" }),
                 ['<TAB>'] = cmp.mapping.confirm({ select = true }),
                 ["<C-Space>"] = cmp.mapping.complete(),
             }),
@@ -78,6 +92,7 @@ return {
 
         vim.diagnostic.config({
             update_in_insert = true,
+            virtual_text = true,
             float = {
                 focusable = false,
                 style = "minimal",
