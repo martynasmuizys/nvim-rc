@@ -15,11 +15,14 @@ return {
                     require("telescope.themes").get_dropdown {}
                 }
             },
-            -- pickers = {
-            --     find_files = {
-            --         hidden = true,
-            --     }
-            -- }
+            pickers = {
+                find_files = {
+                    -- hidden = true,
+                    layout_config = {
+                        preview_width = 0.5
+                    }
+                }
+            }
         })
         require("telescope").load_extension("ui-select")
 

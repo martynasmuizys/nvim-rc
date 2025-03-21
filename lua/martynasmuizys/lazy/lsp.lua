@@ -22,7 +22,11 @@ return {
             cmp_lsp.default_capabilities())
 
         require("fidget").setup({})
-        require("mason").setup()
+        require("mason").setup({
+            ui = {
+                border = "rounded"
+            }
+        })
         require("mason-lspconfig").setup({
             ensure_installed = {
                 "lua_ls",
@@ -57,6 +61,11 @@ return {
 
         local luasnip = require("luasnip")
         cmp.setup({
+            window = {
+                completion = cmp.config.window.bordered(),
+                documentation = cmp.config.window.bordered(),
+            },
+
             snippet = {
                 expand = function(args)
                     luasnip.lsp_expand(args.body) -- For `luasnip` users.
@@ -64,23 +73,39 @@ return {
             },
 
             mapping = cmp.mapping.preset.insert({
-                ["<C-n>"] = cmp.mapping(function()
+                ['<CR>'] = cmp.mapping(function(fallback)
+                    if cmp.visible() then
+                        if luasnip.expandable() then
+                            luasnip.expand()
+                        else
+                            cmp.confirm({
+                                select = true,
+                            })
+                        end
+                    else
+                        fallback()
+                    end
+                end),
+
+                ["<Tab>"] = cmp.mapping(function(fallback)
                     if cmp.visible() then
                         cmp.select_next_item()
                     elseif luasnip.locally_jumpable(1) then
                         luasnip.jump(1)
+                    else
+                        fallback()
                     end
                 end, { "i", "s" }),
 
-                ["<C-p>"] = cmp.mapping(function()
+                ["<S-Tab>"] = cmp.mapping(function(fallback)
                     if cmp.visible() then
                         cmp.select_prev_item()
                     elseif luasnip.locally_jumpable(-1) then
                         luasnip.jump(-1)
+                    else
+                        fallback()
                     end
                 end, { "i", "s" }),
-                ['<TAB>'] = cmp.mapping.confirm({ select = true }),
-                ["<C-Space>"] = cmp.mapping.complete(),
             }),
             sources = cmp.config.sources({
                 { name = 'nvim_lsp' },

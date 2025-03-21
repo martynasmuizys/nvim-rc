@@ -33,16 +33,19 @@ return {
                 variant = "moon",
                 styles = {
                     italic = false,
+                    transparency = true
                 },
                 highlight_groups = {
-                    Normal = { bg = "none" },
-                    NormalNC = { bg = "none" },
-                    TelescopeBorder = { fg = "highlight_high", bg = "base" },
-                    TelescopeNormal = { bg = "base" },
-                    TelescopePromptNormal = { bg = "base" },
-                    TelescopeResultsNormal = { fg = "subtle", bg = "base" },
-                    TelescopeSelection = { fg = "text", bg = "base" },
-                    TelescopeSelectionCaret = { fg = "rose", bg = "rose" },
+                    StatusLine = { fg = "subtle", bg = "surface" },
+                    StatusLineNC = { fg = "muted", bg = "surface", blend = 60 }
+                    -- Normal = { bg = "none" },
+                    -- NormalNC = { bg = "none" },
+                    -- TelescopeBorder = { fg = "highlight_high", bg = "base" },
+                    -- TelescopeNormal = { bg = "base" },
+                    -- TelescopePromptNormal = { bg = "base" },
+                    -- TelescopeResultsNormal = { fg = "subtle", bg = "base" },
+                    -- TelescopeSelection = { fg = "text", bg = "base" },
+                    -- TelescopeSelectionCaret = { fg = "rose", bg = "rose" },
                 },
             })
 
