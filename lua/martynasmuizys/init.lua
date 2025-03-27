@@ -2,18 +2,6 @@ require("martynasmuizys.remap")
 require("martynasmuizys.set")
 require("martynasmuizys.lazy_init")
 
--- idk primeagen uses htmx lsp
--- DO.not
--- DO NOT INCLUDE THIS
-
--- If i want to keep doing lsp debugging
--- function restart_htmx_lsp()
---     require("lsp-debug-tools").restart({ expected = {}, name = "htmx-lsp", cmd = { "htmx-lsp", "--level", "DEBUG" }, root_dir = vim.loop.cwd(), });
--- end
-
--- DO NOT INCLUDE THIS
--- DO.not
-
 local augroup = vim.api.nvim_create_augroup
 local SomeGroup = augroup('Some', {})
 
@@ -23,12 +11,6 @@ local yank_group = augroup('HighlightYank', {})
 function R(name)
     require("plenary.reload").reload_module(name)
 end
-
-vim.filetype.add({
-    extension = {
-        templ = 'templ',
-    }
-})
 
 autocmd('TextYankPost', {
     group = yank_group,
@@ -55,9 +37,9 @@ autocmd('LspAttach', {
         vim.keymap.set("n", "K", function() vim.lsp.buf.hover({ border = "rounded" }) end, opts)
         vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts)
         vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, opts)
-        vim.keymap.set("n", "<leader>vca", function() vim.lsp.buf.code_action() end, opts)
-        vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
-        vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
+        -- vim.keymap.set("n", "<leader>vca", function() vim.lsp.buf.code_action() end, opts)
+        -- vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
+        -- vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
         vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help({ border = "rounded" }) end, opts)
         vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, opts)
         vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, opts)

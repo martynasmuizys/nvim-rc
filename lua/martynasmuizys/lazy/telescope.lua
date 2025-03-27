@@ -18,6 +18,7 @@ return {
             pickers = {
                 find_files = {
                     -- hidden = true,
+                    find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*", "--glob", "!**node_modules/*" },
                     layout_config = {
                         preview_width = 0.5
                     }
