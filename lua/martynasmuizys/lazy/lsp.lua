@@ -30,7 +30,6 @@ return {
         require("mason-lspconfig").setup({
             ensure_installed = {
                 "lua_ls",
-                "rust_analyzer",
                 "gopls",
                 "clangd"
             },
@@ -38,6 +37,21 @@ return {
                 function(server_name) -- default handler (optional)
                     require("lspconfig")[server_name].setup {
                         capabilities = capabilities
+                    }
+                end,
+
+                ["clangd"] = function()
+                    require("lspconfig").clangd.setup {
+                        init_options = {
+                            fallbackFlags = {
+                                "--std=c++26"
+                            }
+                        },
+                        cmd = {
+                            "clangd",
+                            "--function-arg-placeholders",
+                            "--fallback-style=llvm",
+                        }
                     }
                 end,
 
@@ -89,7 +103,7 @@ return {
 
                 ["<C-n>"] = cmp.mapping(function(fallback)
                     if cmp.visible() then
-                        cmp.select_next_item()
+                        cmp.select_next_item(cmp_select)
                     elseif luasnip.locally_jumpable(1) then
                         luasnip.jump(1)
                     else
@@ -99,7 +113,7 @@ return {
 
                 ["<C-p>"] = cmp.mapping(function(fallback)
                     if cmp.visible() then
-                        cmp.select_prev_item()
+                        cmp.select_prev_item(cmp_select)
                     elseif luasnip.locally_jumpable(-1) then
                         luasnip.jump(-1)
                     else
@@ -120,7 +134,7 @@ return {
         })
 
         vim.diagnostic.config({
-            update_in_insert = true,
+            -- update_in_insert = true,
             virtual_text = {
                 enabled = true,
                 severity= "Error",
@@ -135,6 +149,9 @@ return {
                 prefix = "",
             },
         })
-        vim.lsp.inlay_hint.enable()
+        vim.keymap.set("n", "<leader>h", function()
+            vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ 0 }), { 0 })
+        end)
+
     end
 }
