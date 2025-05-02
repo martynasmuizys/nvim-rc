@@ -137,7 +137,7 @@ return {
             -- update_in_insert = true,
             virtual_text = {
                 enabled = true,
-                severity= "Error",
+                severity = "Error",
                 prefix = "●"
             },
             float = {
@@ -152,6 +152,5 @@ return {
         vim.keymap.set("n", "<leader>h", function()
             vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ 0 }), { 0 })
         end)
-
     end
 }
