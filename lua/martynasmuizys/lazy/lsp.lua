@@ -27,47 +27,36 @@ return {
                 border = "rounded"
             }
         })
+
         require("mason-lspconfig").setup({
             ensure_installed = {
                 "lua_ls",
                 "gopls",
                 "clangd"
             },
-            handlers = {
-                function(server_name) -- default handler (optional)
-                    require("lspconfig")[server_name].setup {
-                        capabilities = capabilities
-                    }
-                end,
+        })
 
-                ["clangd"] = function()
-                    require("lspconfig").clangd.setup {
-                        init_options = {
-                            fallbackFlags = {
-                                "--std=c++26"
-                            }
-                        },
-                        cmd = {
-                            "clangd",
-                            "--function-arg-placeholders",
-                            "--fallback-style=llvm",
-                        }
-                    }
-                end,
+        vim.lsp.config("clangd", {
+            init_options = {
+                fallbackFlags = {
+                    "--std=c++26"
+                }
+            },
+            cmd = {
+                "clangd",
+                "--function-arg-placeholders",
+                "--fallback-style=llvm",
+            }
+        })
 
-                ["lua_ls"] = function()
-                    local lspconfig = require("lspconfig")
-                    lspconfig.lua_ls.setup {
-                        capabilities = capabilities,
-                        settings = {
-                            Lua = {
-                                diagnostics = {
-                                    globals = { "vim", "it", "describe", "before_each", "after_each" },
-                                }
-                            }
-                        }
+        vim.lsp.config("lua_ls", {
+            capabilities = capabilities,
+            settings = {
+                Lua = {
+                    diagnostics = {
+                        globals = { "vim", "it", "describe", "before_each", "after_each" },
                     }
-                end,
+                }
             }
         })
 
@@ -87,19 +76,10 @@ return {
             },
 
             mapping = cmp.mapping.preset.insert({
-                ['<Tab>'] = cmp.mapping(function(fallback)
-                    if cmp.visible() then
-                        if luasnip.expandable() then
-                            luasnip.expand()
-                        else
-                            cmp.confirm({
-                                select = true,
-                            })
-                        end
-                    else
-                        fallback()
-                    end
-                end),
+                ['<Tab>'] = cmp.mapping.confirm {
+                    behavior = cmp.ConfirmBehavior.Insert,
+                    select = true,
+                },
 
                 ["<C-n>"] = cmp.mapping(function(fallback)
                     if cmp.visible() then
