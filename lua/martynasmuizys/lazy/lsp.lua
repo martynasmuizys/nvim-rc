@@ -3,23 +3,17 @@ return {
     dependencies = {
         "williamboman/mason.nvim",
         "williamboman/mason-lspconfig.nvim",
-        "hrsh7th/cmp-nvim-lsp",
-        "hrsh7th/cmp-buffer",
-        "hrsh7th/cmp-path",
-        "hrsh7th/cmp-cmdline",
-        "hrsh7th/nvim-cmp",
+        { 'saghen/blink.cmp', version = '1.*' },
         "L3MON4D3/LuaSnip",
-        "saadparwaiz1/cmp_luasnip",
         "j-hui/fidget.nvim",
     },
     config = function()
-        local cmp = require('cmp')
-        local cmp_lsp = require("cmp_nvim_lsp")
+        local blink = require("blink.cmp");
         local capabilities = vim.tbl_deep_extend(
             "force",
             {},
             vim.lsp.protocol.make_client_capabilities(),
-            cmp_lsp.default_capabilities())
+            blink.get_lsp_capabilities())
 
         require("fidget").setup({})
         require("mason").setup({
@@ -37,6 +31,7 @@ return {
         })
 
         vim.lsp.config("clangd", {
+            capabilities = capabilities,
             init_options = {
                 fallbackFlags = {
                     "--std=c++26"
@@ -60,57 +55,83 @@ return {
             }
         })
 
-        local cmp_select = { behavior = cmp.SelectBehavior.Select }
+        blink.setup({
 
-        local luasnip = require("luasnip")
-        cmp.setup({
-            window = {
-                completion = cmp.config.window.bordered(),
-                documentation = cmp.config.window.bordered(),
+            keymap = {
+                preset = 'none',
+
+                ["<Tab>"] = { 'accept', 'fallback' },
+                ['<C-p>'] = { 'select_prev', 'snippet_backward' },
+                ['<C-n>'] = { 'select_next', 'snippet_forward' },
+                ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
+                ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
+                ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
+                ['<C-e>'] = { 'hide' },
+                ['<C-k>'] = { 'show_signature', 'hide_signature', 'fallback' },
+
             },
 
-            snippet = {
-                expand = function(args)
-                    luasnip.lsp_expand(args.body) -- For `luasnip` users.
-                end,
-            },
-
-            mapping = cmp.mapping.preset.insert({
-                ['<Tab>'] = cmp.mapping.confirm {
-                    behavior = cmp.ConfirmBehavior.Insert,
-                    select = true,
+            signature = {
+                enabled = true,
+                window = {
+                    border = "rounded",
                 },
+            },
 
-                ["<C-n>"] = cmp.mapping(function(fallback)
-                    if cmp.visible() then
-                        cmp.select_next_item(cmp_select)
-                    elseif luasnip.locally_jumpable(1) then
-                        luasnip.jump(1)
-                    else
-                        fallback()
-                    end
-                end, { "i", "s" }),
 
-                ["<C-p>"] = cmp.mapping(function(fallback)
-                    if cmp.visible() then
-                        cmp.select_prev_item(cmp_select)
-                    elseif luasnip.locally_jumpable(-1) then
-                        luasnip.jump(-1)
-                    else
-                        fallback()
-                    end
-                end, { "i", "s" }),
-                ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-                ['<C-f>'] = cmp.mapping.scroll_docs(4),
-                ['<C-Space>'] = cmp.mapping.complete(),
-                ['<C-e>'] = cmp.mapping.abort(),
-            }),
-            sources = cmp.config.sources({
-                { name = 'nvim_lsp' },
-                { name = 'luasnip' }, -- For luasnip users.
-            }, {
-                { name = 'buffer' },
-            })
+            appearance = {
+                nerd_font_variant = 'mono'
+            },
+
+            completion = {
+                list = {
+                    selection = {
+                        auto_insert = false
+                    }
+                },
+                menu = {
+                    border = "rounded",
+                    draw = {
+                        columns = {
+                            { "label", "label_description", gap = 1 }, { "kind" }
+                        }
+                    }
+                },
+                documentation = {
+                    window = {
+                        border = "rounded",
+                    },
+                    auto_show = false
+                }
+            },
+
+            cmdline = {
+                keymap = {
+                    ['<Tab>'] = { 'show_and_insert', 'select_next' },
+                    ['<S-Tab>'] = { 'show_and_insert', 'select_prev' },
+
+                    ['<C-space>'] = { 'show', 'fallback' },
+
+                    ['<C-n>'] = { 'select_next', 'fallback' },
+                    ['<C-p>'] = { 'select_prev', 'fallback' },
+                    ['<Right>'] = { 'select_next', 'fallback' },
+                    ['<Left>'] = { 'select_prev', 'fallback' },
+
+                    ['<C-y>'] = { 'select_and_accept' },
+                    ['<C-e>'] = { 'cancel' },
+                },
+                completion = { menu = { auto_show = false } },
+            },
+
+            snippets = {
+                preset = 'luasnip'
+            },
+
+            sources = {
+                default = { 'lsp', 'path', 'snippets', 'buffer' },
+            },
+
+            fuzzy = { implementation = "prefer_rust_with_warning" }
         })
 
         vim.diagnostic.config({
