@@ -3,4 +3,5 @@ Package dependencies:
  - ripgrep
  - fzf
  - git
- - tmux (and tmux-sessionizer)
+ - tmux
+ - tmux-sessionizer (from theprimeagen; not really using it tho :/)
