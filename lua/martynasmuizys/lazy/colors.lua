@@ -40,7 +40,7 @@ return {
 					StatusLineNC = {},
 					DiagnosticHint = { fg = "#00ffff" },
 					DiagnosticWarn = { fg = "#f6c117" },
-					DiagnosticError = { fg = "#fc7f72" },
+					DiagnosticError = { fg = "#fc5f72" },
 				},
 			})
 
