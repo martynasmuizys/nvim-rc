@@ -36,10 +36,10 @@ return {
 					transparency = true,
 				},
 				highlight_groups = {
-					StatusLine = { fg = "#00ffff" },
+					StatusLine = { fg = "#00f5d4" },
 					StatusLineNC = {},
-					DiagnosticHint = { fg = "#00ffff" },
-					DiagnosticWarn = { fg = "#f6c117" },
+					DiagnosticHint = { fg = "#00f5d4" },
+					DiagnosticWarn = { fg = "#ffb703" },
 					DiagnosticError = { fg = "#fc5f72" },
 				},
 			})
