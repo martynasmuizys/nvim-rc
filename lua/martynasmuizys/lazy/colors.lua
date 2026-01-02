@@ -1,9 +1,14 @@
 function ColorMyPencils(color)
-	color = color or "rose-pine-moon"
+	color = color or "rxze49"
 	vim.cmd.colorscheme(color)
 end
 
 return {
+	{
+		"scottmckendry/cyberdream.nvim",
+		lazy = false,
+		priority = 1000,
+	},
 	{
 		"folke/tokyonight.nvim",
 		config = function()
@@ -43,7 +48,6 @@ return {
 					DiagnosticError = { fg = "#fc5f72" },
 				},
 			})
-
 			ColorMyPencils()
 		end,
 	},

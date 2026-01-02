@@ -97,8 +97,10 @@ return {
 					window = {
 						border = "rounded",
 					},
-					auto_show = false,
+					auto_show = true,
 				},
+
+				keyword = { range = "full" },
 			},
 
 			cmdline = {
