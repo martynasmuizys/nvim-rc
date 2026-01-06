@@ -1,7 +1,7 @@
 return {
 	{
 		"horizn",
-		dir = "~/personal/dev/horizn_v2/",
+		dir = "~/personal/dev/horizn/",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		config = function()
 			require("horizn").setup({})
@@ -9,15 +9,13 @@ return {
 	},
 	{
 		"rxze49",
-		dir = "~/personal/dev/rxze49-nvimv2/",
+		dir = "~/personal/dev/rxze49/",
 		config = function()
 			require("rxze49").setup({
-				variant = "main",
 				enable = {
 					terminal = true,
 				},
 				styles = {
-					italic = false,
 					transparency = true,
 				},
 			})
