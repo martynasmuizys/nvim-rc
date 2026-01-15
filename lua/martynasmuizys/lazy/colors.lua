@@ -1,8 +1,3 @@
-function ColorMyPencils(color)
-	color = color or "rxze49"
-	vim.cmd.colorscheme(color)
-end
-
 return {
 	{
 		"scottmckendry/cyberdream.nvim",
@@ -48,7 +43,6 @@ return {
 					DiagnosticError = { fg = "#fc5f72" },
 				},
 			})
-			ColorMyPencils()
 		end,
 	},
 }

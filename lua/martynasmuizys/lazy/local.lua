@@ -8,10 +8,10 @@ return {
 		end,
 	},
 	{
-		"rxze49",
-		dir = "~/personal/dev/rxze49/",
+		"tzfn",
+		dir = "~/personal/dev/tzfn/",
 		config = function()
-			require("rxze49").setup({
+			require("tzfn").setup({
 				enable = {
 					terminal = true,
 				},
@@ -19,6 +19,7 @@ return {
 					transparency = true,
 				},
 			})
+			vim.cmd.colorscheme("tzfn")
 		end,
 	},
 }
