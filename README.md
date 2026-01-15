@@ -4,5 +4,5 @@ Package dependencies:
  - fzf
  - git
  - tmux
- - tmux-sessionizer (from theprimeagen; not really using it tho :/)
- - need deno for peek
+ - tmux-sessionizer
+ - need deno and webkit2gtk for peek
