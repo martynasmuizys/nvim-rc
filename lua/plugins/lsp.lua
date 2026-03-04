@@ -9,7 +9,9 @@ return {
 		"hrsh7th/cmp-cmdline",
 		"hrsh7th/nvim-cmp",
 		"L3MON4D3/LuaSnip",
+		"saadparwaiz1/cmp_luasnip",
 		"j-hui/fidget.nvim",
+		"onsails/lspkind.nvim",
 	},
 	config = function()
 		local cmp = require("cmp")
@@ -50,12 +52,38 @@ return {
 			},
 		})
 
+		vim.lsp.config("zls", {
+			settings = {
+				zls = {
+					enable_inlay_hints = true,
+					enable_snippets = true,
+					warn_style = true,
+				},
+			},
+		})
+
 		vim.lsp.config("lua_ls", {
 			capabilities = capabilities,
 			settings = {
 				Lua = {
+					runtime = {
+						version = "LuaJIT",
+					},
 					diagnostics = {
-						globals = { "vim", "it", "describe", "before_each", "after_each" },
+						globals = { "vim" },
+					},
+					workspace = {
+						library = vim.api.nvim_get_runtime_file("", true),
+						checkThirdParty = false,
+					},
+					format = {
+						enable = true,
+						-- Put format options here
+						-- NOTE: the value should be STRING!!
+						defaultConfig = {
+							indent_style = "space",
+							indent_size = "2",
+						},
 					},
 				},
 			},
@@ -120,7 +148,7 @@ return {
 
 				["<C-e>"] = cmp.mapping.close(),
 				["<C-k>"] = cmp.mapping(function(fallback)
-					local clients = vim.lsp.get_active_clients({ bufnr = 0 })
+					local clients = vim.lsp.get_clients({ bufnr = 0 })
 					if next(clients) ~= nil then
 						vim.lsp.buf.signature_help()
 					else
@@ -132,6 +160,19 @@ return {
 			window = {
 				completion = cmp.config.window.bordered({ border = "rounded" }),
 				documentation = cmp.config.window.bordered({ border = "rounded" }),
+			},
+
+			formatting = {
+				format = require("lspkind").cmp_format({
+					mode = "symbol_text", -- show both icon and text
+					maxwidth = 50,
+					ellipsis_char = "...",
+				}),
+			},
+
+			completion = {
+				keyword_length = 2,
+				max_item_count = 12,
 			},
 
 			sources = cmp.config.sources({
@@ -154,7 +195,7 @@ return {
 				focusable = false,
 				style = "minimal",
 				border = "rounded",
-				source = "always",
+				source = true,
 				header = "",
 				prefix = "",
 			},

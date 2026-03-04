@@ -2,7 +2,9 @@ return {
 	{
 		"nvim-treesitter/nvim-treesitter",
 		build = ":TSUpdate",
+		dependencies = { "nvim-treesitter/nvim-treesitter-textobjects" },
 		config = function()
+			---@diagnostic disable-next-line: missing-fields
 			require("nvim-treesitter.configs").setup({
 				-- A list of parser names, or "all"
 				ensure_installed = {

@@ -18,7 +18,7 @@ require("lazy").setup({
 	spec = {
 		{ import = "plugins" },
 	},
-	install = { colorscheme = { "tzfn" } },
+	-- install = { colorscheme = { "tzfn" } },
 	change_detection = { notify = false },
 	ui = {
 		border = "rounded",
