@@ -1,6 +1,4 @@
-vim.pack.add({
-	"https://github.com/sirzif/tzfn.nvim",
-})
+vim.pack.add({ "https://github.com/sirzif/tzfn.nvim" })
 
 require("tzfn").setup({
 	enable = {

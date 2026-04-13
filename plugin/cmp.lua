@@ -1,3 +1,4 @@
+-- vim.schedule(function()
 vim.pack.add({
 	"https://github.com/hrsh7th/cmp-nvim-lsp",
 	"https://github.com/hrsh7th/cmp-buffer",
@@ -6,23 +7,14 @@ vim.pack.add({
 	"https://github.com/hrsh7th/nvim-cmp",
 	"https://github.com/saadparwaiz1/cmp_luasnip",
 	"https://github.com/onsails/lspkind.nvim",
+	{ src = "https://github.com/L3MON4D3/LuaSnip", version = vim.version.range("2.*") },
 })
+-- end)
 
 local cmp = require("cmp")
-require("mason").setup({
-	ui = {
-		border = "rounded",
-	},
-})
-require("mason-lspconfig").setup({
-	ensure_installed = {
-		"lua_ls",
-		"gopls",
-	},
-})
-
 local cmp_select = { behavior = cmp.SelectBehavior.Select }
 local luasnip = require("luasnip")
+require("luasnip.loaders.from_vscode").lazy_load()
 
 cmp.setup({
 	enabled = function()
@@ -109,7 +101,7 @@ cmp.setup({
 	sources = cmp.config.sources({
 		{ name = "nvim_lsp", max_item_count = 12 },
 		{ name = "luasnip" }, -- For luasnip users.
-		{ name = "path" },
+		{ name = "path", max_item_count = 12 },
 	}, {
 		{ name = "buffer" },
 	}),
