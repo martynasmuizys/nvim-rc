@@ -3,29 +3,20 @@ return {
 	opts = {},
 	config = function()
 		require("conform").setup({
-			-- notify_on_error = false,
+			notify_on_error = false,
 			format_on_save = {
-				timeout_ms = 5000,
 				lsp_format = "fallback",
+				timeout_ms = 5000,
 			},
 			formatters_by_ft = {
-				c = { "clang-format" },
-				cpp = { "clang-format" },
 				lua = { "stylua" },
 				go = { "gofmt" },
-				-- javascript = { "prettier" },
-				-- typescript = { "prettier" },
 				sh = { "beautysh" },
 				bash = { "beautysh" },
+				markdown = { "oxfmt" },
+				yaml = { "oxfmt" },
 			},
-			formatters = {
-				["clang-format"] = {
-					prepend_args = {
-						"--style=file:" .. vim.fn.expand("~/.config/clangd/.clang-format"),
-						"--fallback-style=LLVM",
-					},
-				},
-			},
+			formatters = {},
 		})
 
 		vim.keymap.set("n", "<leader>f", function()

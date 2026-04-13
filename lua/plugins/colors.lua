@@ -1,9 +1,25 @@
 function ColorMyPencils(color)
-	color = color or "rxze49"
+	color = color or "tzfn"
 	vim.cmd.colorscheme(color)
 end
 
 return {
+	{
+		"ellisonleao/gruvbox.nvim",
+		priority = 1000,
+		config = true,
+		opts = {
+			transparent_mode = true,
+			bold = false,
+			italic = {
+				strings = false,
+				emphasis = false,
+				comments = false,
+				operators = false,
+				folds = false,
+			},
+		},
+	},
 	{
 		"scottmckendry/cyberdream.nvim",
 		lazy = false,
@@ -21,8 +37,8 @@ return {
 				styles = {
 					-- Style to be applied to different syntax groups
 					-- Value is any valid attr-list value for `:help nvim_set_hl`
-					comments = { italic = false },
-					keywords = { italic = false },
+					-- comments = { italic = false },
+					-- keywords = { italic = false },
 					-- Background styles. Can be "dark", "transparent" or "normal"
 					sidebars = "dark", -- style for sidebars, see below
 					floats = "dark", -- style for floating windows
