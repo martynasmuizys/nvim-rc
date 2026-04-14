@@ -1,4 +1,7 @@
-vim.pack.add({ "https://github.com/stevearc/oil.nvim" })
+vim.pack.add({
+	"https://github.com/stevearc/oil.nvim",
+	"https://github.com/nvim-tree/nvim-web-devicons",
+})
 function _G.get_oil_winbar()
 	local bufnr = vim.api.nvim_win_get_buf(vim.g.statusline_winid)
 	local dir = require("oil").get_current_dir(bufnr)
