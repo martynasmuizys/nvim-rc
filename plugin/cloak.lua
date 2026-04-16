@@ -1,8 +1,6 @@
-vim.api.nvim_create_autocmd({ "BufReadPre", "BufNewFile" }, {
-	once = true,
-	pattern = ".env*",
-	callback = function()
-		vim.pack.add({ "https://github.com/laytan/cloak.nvim" })
+_G.lazy_load({ "BufReadPre", "BufNewFile" }, {
+	"laytan/cloak.nvim",
+	config = function()
 		require("cloak").setup()
 	end,
 })
