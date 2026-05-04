@@ -17,7 +17,7 @@ _G.lazy_load(nil, {
 			"zig",
 		}
 
-		-- local group = vim.api.nvim_create_augroup("TreesitterGroup", { clear = true })
+		local group = vim.api.nvim_create_augroup("TreesitterGroup", { clear = true })
 		--
 		-- vim.api.nvim_create_autocmd("User", {
 		-- 	group = group,
@@ -27,6 +27,16 @@ _G.lazy_load(nil, {
 		-- 		require("nvim-treesitter").install(parsers)
 		-- 	end,
 		-- })
+		vim.api.nvim_create_autocmd({ "BufEnter", "FileType" }, {
+			group = group,
+			callback = function()
+				if vim.bo.buftype ~= "" then
+					return
+				end
+
+				pcall(vim.treesitter.start, 0)
+			end,
+		})
 		require("nvim-treesitter").install(parsers)
 
 		require("nvim-treesitter-textobjects").setup({

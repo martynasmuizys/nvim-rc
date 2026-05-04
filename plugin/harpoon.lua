@@ -1,6 +1,6 @@
 _G.lazy_load(nil, {
 	"ThePrimeagen/harpoon",
-	version = "harpoon2",
+	branch = "harpoon2",
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 	},
