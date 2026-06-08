@@ -1,15 +1,5 @@
 return {
 	{
-		"scottmckendry/cyberdream.nvim",
-		lazy = false,
-		priority = 1000,
-		config = function()
-			require("cyberdream").setup({
-				transparent = true,
-			})
-		end,
-	},
-	{
 		"folke/tokyonight.nvim",
 		config = function()
 			require("tokyonight").setup({
@@ -31,23 +21,18 @@ return {
 		end,
 	},
 	{
-		"rose-pine/neovim",
-		name = "rose-pine",
+		"sirzif/tzfn.nvim",
+		-- dir = "~/personal/dev/tzfn/",
 		config = function()
-			require("rose-pine").setup({
-				variant = "moon",
+			require("tzfn").setup({
+				enable = {
+					terminal = true,
+				},
 				styles = {
-					italic = false,
 					transparency = true,
 				},
-				highlight_groups = {
-					StatusLine = { fg = "#00f5d4" },
-					StatusLineNC = {},
-					DiagnosticHint = { fg = "#00f5d4" },
-					DiagnosticWarn = { fg = "#ffb703" },
-					DiagnosticError = { fg = "#fc5f72" },
-				},
 			})
+			vim.cmd.colorscheme("tzfn")
 		end,
 	},
 }

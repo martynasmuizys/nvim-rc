@@ -5,4 +5,3 @@ Package dependencies:
  - git
  - tmux
  - tmux-sessionizer
- - need deno and webkit2gtk for peek
