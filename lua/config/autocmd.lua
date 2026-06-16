@@ -20,9 +20,14 @@ autocmd("TextYankPost", {
 })
 
 autocmd({ "BufWritePre" }, {
-	group = MyGroup,
+	group = SomeGroup,
 	pattern = "*",
-	command = [[%s/\s\+$//e]],
+	callback = function()
+		-- was bug with modifiable
+		if vim.bo.filetype ~= "oil" then
+			vim.cmd([[keeppatterns %s/\s\+$//e]])
+		end
+	end,
 })
 
 autocmd("LspAttach", {
